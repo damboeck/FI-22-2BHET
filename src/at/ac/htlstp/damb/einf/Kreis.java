@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 /**
  * Ein kleines Programm zum Berechnen der Fläche eines Kreises
+ *
+ * @author Werner Damböck
  */
 public class Kreis {
 
