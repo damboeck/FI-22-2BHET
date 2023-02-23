@@ -20,6 +20,13 @@ public class Feld2 {
         return max;
     }
 
+    public static double[] copyArray(double[] x) {
+        double[] ergebnis = new double[x.length];
+        for (int i=0;i<ergebnis.length;i++)
+            ergebnis[i] = x[i];
+        return ergebnis;
+    }
+
     public static void main(String[] args) {
         double[] R = {110,200,220,470,560,100};
         System.out.println(Arrays.toString(R));
