@@ -40,7 +40,7 @@ public class FKreis extends FrameMT{
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        k.setR(k.getR()-e.getWheelRotation()*2);
+        k.scaleRadius(e.getWheelRotation());
         repaint();
     }
 }

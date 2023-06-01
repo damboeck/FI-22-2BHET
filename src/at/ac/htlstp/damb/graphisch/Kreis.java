@@ -2,18 +2,14 @@ package at.ac.htlstp.damb.graphisch;
 
 import java.awt.*;
 
-public class Kreis {
+public class Kreis extends FlaecheZweipunkt {
 
-    private int r;
-    private Point m;
-    private Color c;
-    private boolean fill;
+    public Kreis(Point p1, Point p2, Color c, boolean fill) {
+        super(p1, p2, c, fill);
+    }
 
     public Kreis(int r, Point m, Color c, boolean fill) {
-        this.r = r;
-        this.m = m;
-        this.c = c;
-        this.fill = fill;
+        this(new Point(m.x-r,m.y-r),new Point(m.x+r,m.y+r),c,fill);
     }
     public Kreis(int r, int mx, int my, Color c, boolean fill) {
         this(r,new Point(mx,my),c,fill);
@@ -22,41 +18,46 @@ public class Kreis {
         this(r,m,Color.blue,false);
     }
 
+    @Override
     public void paint(Graphics g) {
-        g.setColor(c);
-        if (fill) g.fillOval(m.x-r,m.y-r,2*r,2*r);
-        else      g.drawOval(m.x-r,m.y-r,2*r,2*r);
+        g.setColor(getC());
+        if (isFill()) g.fillOval(getM().x-getR().x,getM().y-getR().y,2*getR().x,2*getR().y);
+        else      g.drawOval(getM().x-getR().x,getM().y-getR().y,2*getR().x,2*getR().y);
     }
 
-    public int getR() {
-        return r;
+    public Point getR() {
+        int rx = (getP2().x-getP1().x)/2;
+        int ry = (getP2().y-getP1().y)/2;
+        return new Point(rx<0?-rx:rx,ry<0?-ry:ry);
     }
 
     public void setR(int r) {
-        this.r = r;
+        Point m=getM();
+        setP1(new Point(m.x-r,m.y-r));
+        setP2(new Point(m.x+r,m.y+r));
+    }
+    public void setR(Point r) {
+        Point m=getM();
+        setP1(new Point(m.x-r.x,m.y-r.y));
+        setP2(new Point(m.x+r.y,m.y+r.y));
     }
 
     public Point getM() {
-        return m;
+        return new Point((getP1().x+getP2().x)/2,(getP1().y+getP2().y)/2);
     }
 
     public void setM(Point m) {
-        this.m = m;
+        Point r=getR();
+        setP1(new Point(m.x-r.x,m.y-r.y));
+        setP2(new Point(m.x+r.y,m.y+r.y));
     }
 
-    public Color getC() {
-        return c;
+    public void scaleRadius(int f) {
+        Point r =getR();
+        Point m =getM();
+        r = new Point(r.x+f,r.y+f);
+        setP1(new Point(m.x-r.x,m.y-r.y));
+        setP2(new Point(m.x+r.y,m.y+r.y));
     }
 
-    public void setC(Color c) {
-        this.c = c;
-    }
-
-    public boolean isFill() {
-        return fill;
-    }
-
-    public void setFill(boolean fill) {
-        this.fill = fill;
-    }
 }
